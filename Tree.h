@@ -13,11 +13,10 @@ public:
 	Tree();
 	~Tree();
 
-	void symbolsCounter(std::string);
+	void archive(std::string);
 
 	node* get_root();
-	
+
 	int* get_number_of_symbols();
 	void set_number_of_symbols(int);
 };
-
