@@ -1,21 +1,21 @@
-#include "node.h"
+#include "Node.h"
 
 
 
-node::node()
+Node::Node()
 {
 	next_left = nullptr;
 	next_right = nullptr;
 
 }
 
-node::node(int sum, char symbol) : sum(sum), symbol(symbol)
+Node::Node(int sum, char symbol) : sum(sum), symbol(symbol)
 {
 	next_left = nullptr;
 	next_right = nullptr;
 }
 
 
-node::~node()
+Node::~Node()
 {
 }
