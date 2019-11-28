@@ -6,13 +6,13 @@ using namespace std;
 
 
 int main() {
-	  
 
-	
+
+
 	Tree tree;
-	tree.symbolsCounter("text.txt");
+	tree.archive("text.txt");
 
-	
+
 
 
 
