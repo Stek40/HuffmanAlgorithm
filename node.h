@@ -1,12 +1,11 @@
 #pragma once
-struct node
+struct Node
 {
 	int sum;
 	char symbol;
-	node* next_left;
-	node* next_right;
-	node();
-	node(int, char);
-	~node();
+	Node* next_left;
+	Node* next_right;
+	Node();
+	Node(int, char);
+	~Node();
 };
-
