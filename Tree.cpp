@@ -17,19 +17,26 @@ Tree::~Tree()
 
 }
 
-void Tree::symbolsCounter(std::string text)
+void Tree::archive(std::string file_name)
 {
-	std::ifstream f(text);
+	std::ifstream f(file_name);
 
 	char ch;
-	while (f >> ch) {
+	while (f.get(ch)) {
 		set_number_of_symbols((int)ch);
 	}
-	cout << get_number_of_symbols()[(int)'a'] << endl << get_number_of_symbols()[(int)'c'] << endl;
+	cout << get_number_of_symbols()[(int)'a'] << endl 
+		 << get_number_of_symbols()[(int)'c'] << endl
+		 << get_number_of_symbols()[(int)' '] << endl;
+
+	for (size_t i = 0; i < 256; i++)
+	{
+
+	}
 
 }
 
-int * Tree::get_number_of_symbols()
+int* Tree::get_number_of_symbols()
 {
 	return number_of_symbols;
 }
