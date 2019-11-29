@@ -6,6 +6,7 @@ struct Node
 	Node* next_left;
 	Node* next_right;
 	Node();
-	Node(int, char);
+	Node(char, int);
+	Node& operator= (const Node& other);
 	~Node();
 };
