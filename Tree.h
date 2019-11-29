@@ -8,7 +8,7 @@ class Tree
 {
 private:
 	Node* root;
-	
+
 
 public:
 	Tree();
@@ -16,7 +16,8 @@ public:
 	~Tree();
 
 	void archive(std::string);
-	vector<Node> zeroless_and_sorted(int*);
+	Node* zeroless_and_sorted(int*, int*);
+	Tree* combineWith(Tree*);
 
 	Node* get_root();
 
