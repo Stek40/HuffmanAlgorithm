@@ -10,9 +10,11 @@ int main() {
 
 
 	Tree tree;
-	tree.archive("text.txt");
-
-
+	//tree.archive("text.txt");
+	
+	Tree tree2;
+	tree2.archive("textche.txt");
+	
 
 
 
