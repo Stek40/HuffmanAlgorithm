@@ -9,6 +9,12 @@ Node::Node() : sum(0), symbol(0)
 
 }
 
+Node::Node(int sum) : sum(sum)
+{
+	next_left = nullptr;
+	next_right = nullptr;
+}
+
 Node::Node(char symbol, int sum) : sum(sum), symbol(symbol)
 {
 	next_left = nullptr;
@@ -16,7 +22,7 @@ Node::Node(char symbol, int sum) : sum(sum), symbol(symbol)
 }
 
 
-Node& Node::operator= (const Node& other) 
+Node& Node::operator= (const Node& other)
 {
 	if (this != &other) {
 		this->sum = other.sum;
