@@ -4,6 +4,13 @@
 #include<fstream>
 using namespace std;
 
+#pragma once
+#include "Node.h"
+#include <string>
+#include<fstream>
+#include "Pair.h"
+using namespace std;
+
 class Tree
 {
 private:
@@ -18,7 +25,9 @@ public:
 	void archive(std::string);
 	Node* zeroless_and_sorted(int*, int*);
 	void combineWith(Tree*);
-	void mappingSymbols(map<char, string>&, Node*);
+	//void mappingSymbols(map<char, string>&, Node*);
+	void mappingSymbols(Pair*);
+	void symbolsTreeSearch(Pair*, Node*, string, int*);
 
 	Node* get_root();
 };
