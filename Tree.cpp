@@ -2,14 +2,11 @@
 #include "Tree.h"
 #include <iostream>
 #include <vector> 
-#include <map> 
 using namespace std;
-
 
 Tree::Tree()
 {
 	root = nullptr;
-
 }
 
 Tree::Tree(char ch, int n)
@@ -25,7 +22,6 @@ Tree::Tree(Node* node)
 
 Tree::~Tree()
 {
-	
 
 }
 
@@ -34,20 +30,14 @@ void Tree::archive(std::string file_name)
 	std::ifstream f(file_name);
 	int* number_of_symbols = new int[256]{};
 	char ch;
+
+	//reading file
 	while (f.get(ch)) {
 		number_of_symbols[(int)ch]++;
 	}
-	cout << number_of_symbols[(int)'a'] << endl
-		<< number_of_symbols[(int)'c'] << endl
-		<< number_of_symbols[(int)'b'] << endl
-		<< number_of_symbols[(int)'\n'] << endl;
 	int* n_of_diff_chars = new int[1];
 	Node* nodes = zeroless_and_sorted(number_of_symbols, n_of_diff_chars);
-	cout << number_of_symbols[(int)'a'] << endl
-		<< number_of_symbols[(int)'c'] << endl
-		<< number_of_symbols[(int)'b'] << endl
-		<< number_of_symbols[(int)'\n'] << endl;
-	cout << *n_of_diff_chars << "!!" << endl;
+	cout << *n_of_diff_chars << endl;
 	for (int i = 0; i < 4; i++)
 	{
 		cout << nodes[i].symbol << " " << nodes[i].sum << endl;
@@ -62,7 +52,7 @@ void Tree::archive(std::string file_name)
 	}
 
 	// uniting trees into one big tree
-	cout << "size of trees before uniting:" << trees.size()<<endl;
+	cout << "size of trees before uniting:" << trees.size() << endl;
 	while (trees.size() > 1)
 	{
 		Tree* min1;
@@ -76,15 +66,15 @@ void Tree::archive(std::string file_name)
 			min1_position = 0;
 			min2_position = 1;
 		}
-		else 
+		else
 		{
 			min1 = &trees[1];
 			min2 = &trees[0];
 			min1_position = 1;
 			min2_position = 0;
 		}
-		
-		
+
+
 		for (int i = 2; i < trees.size(); i++)
 		{
 			if (trees[i].root->sum < min1->root->sum)
@@ -107,25 +97,38 @@ void Tree::archive(std::string file_name)
 		trees.erase(trees.begin() + min2_position);
 	}
 
-	cout << trees[0].root->sum;
+	cout << trees[0].root->sum << endl;
 
 	// obrazuvane na 0 i 1 posledovatelnosti za vs simvol
+	Pair* pairs = new Pair[*n_of_diff_chars];
+	//map<char, string>* symbols_archive = new map<char, string>();
+	//symbols_archive->insert(pair<char, string>('a', "010"));
+	mappingSymbols(pairs);
 
-	map<char, string>* symbols_archive = new map<char, string>();
-	symbols_archive->insert(pair<char, string>('a', "010"));
-	
+	ofstream outfile("archive_" + file_name);
 
-	int found_all = 0;
-	
-	//while (found_all != *n_of_diff_chars)
-	{
-		trees[0];
-	}
+	outfile << "you did it!" << std::endl;
+
+	outfile.close();
+
 }
-
+/*
 void Tree::mappingSymbols(map<char, string>* symbols_archive, Node* node)
+{}
+*/
+void Tree::mappingSymbols(Pair* pairs) 
 {
-
+	int* pairsCurrentSize = new int();
+	*pairsCurrentSize = 0;
+	cout << *pairsCurrentSize << ".." << endl;
+	//symbolsTreeSearch(pairs, this->get_root, "", pairsCurrentSize);
+}
+void Tree::symbolsTreeSearch(Pair* pairs, Node* node, string zeroAndOne, int* pairsCurrentSize)
+{
+	if (node->next_left == nullptr)
+	{
+		//pairs[*pairsCurrentSize]
+	}
 }
 
 void Tree::combineWith(Tree* tree)
