@@ -74,7 +74,6 @@ void Tree::archive(std::string file_name)
 			min2_position = 0;
 		}
 
-
 		for (int i = 2; i < trees.size(); i++)
 		{
 			if (trees[i].root->sum < min1->root->sum)
@@ -98,37 +97,77 @@ void Tree::archive(std::string file_name)
 	}
 
 	cout << trees[0].root->sum << endl;
+	this->set_root(trees[0].root);
 
-	// obrazuvane na 0 i 1 posledovatelnosti za vs simvol
-	Pair* pairs = new Pair[*n_of_diff_chars];
-	//map<char, string>* symbols_archive = new map<char, string>();
-	//symbols_archive->insert(pair<char, string>('a', "010"));
+	// obrazuvane masic(map) na 0 i 1 posledovatelnosti za vs simvol ot faila
+	Pair** pairs = new Pair*[*n_of_diff_chars];
 	mappingSymbols(pairs);
 
+	for (int i = 0; i < *n_of_diff_chars; i++)
+	{
+		cout << pairs[i]->get_ch() << " " << pairs[i]->get_str()<<";";
+	}
+	cout << endl;
+
+	// saving to archive
+	ifstream infile(file_name);
 	ofstream outfile("archive_" + file_name);
+	char symb;
 
-	outfile << "you did it!" << std::endl;
+	string tree_archive = treeToString();
 
+	while (infile.get(symb)) {
+		outfile << mapped(pairs, symb, *n_of_diff_chars);
+	}
+	
+	infile.close();
 	outfile.close();
 
 }
-/*
-void Tree::mappingSymbols(map<char, string>* symbols_archive, Node* node)
-{}
-*/
-void Tree::mappingSymbols(Pair* pairs) 
+string Tree::treeToString()
+{
+	return treeToStringRecursion("", this->get_root(), nullptr);
+}
+string Tree::treeToStringRecursion(string string_tree, Node* dis, Node* super)
+{
+	string_tree += "(";
+	if (dis->next_left == nullptr)
+	{
+		string_tree += dis->symbol + numToStr(dis->sum);
+	}
+}
+string Tree::numToStr(int n)
+{
+	string result = "";
+	while(n/10)
+	return result;
+}
+
+string Tree::mapped(Pair** pairs, char symbol, int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		if (pairs[i]->get_ch() == symbol)
+			return pairs[i]->get_str();
+	}
+}
+
+void Tree::mappingSymbols(Pair** pairs)
 {
 	int* pairsCurrentSize = new int();
 	*pairsCurrentSize = 0;
-	cout << *pairsCurrentSize << ".." << endl;
-	//symbolsTreeSearch(pairs, this->get_root, "", pairsCurrentSize);
+	symbolsTreeSearch(pairs, this->get_root(), "", pairsCurrentSize);
 }
-void Tree::symbolsTreeSearch(Pair* pairs, Node* node, string zeroAndOne, int* pairsCurrentSize)
+void Tree::symbolsTreeSearch(Pair** pairs, Node* node, string str01, int* pairsCurrentSize)
 {
-	if (node->next_left == nullptr)
+	if (node->next_left == nullptr)//listo
 	{
-		//pairs[*pairsCurrentSize]
+		pairs[*pairsCurrentSize] = new Pair(node->symbol, str01);
+		(*pairsCurrentSize)++;
+		return;
 	}
+	symbolsTreeSearch(pairs, node->next_left, str01 + "0", pairsCurrentSize);
+	symbolsTreeSearch(pairs, node->next_right, str01 + "1", pairsCurrentSize);
 }
 
 void Tree::combineWith(Tree* tree)
@@ -179,4 +218,9 @@ Node* Tree::zeroless_and_sorted(int* arr, int* n_of_diff_chars)
 Node* Tree::get_root()
 {
 	return root;
+}
+
+void Tree::set_root(Node* root)
+{
+	this->root = root;
 }
