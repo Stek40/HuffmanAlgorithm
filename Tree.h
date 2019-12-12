@@ -25,6 +25,7 @@ public:
 	string treeToString();
 	string treeToStringRecursion(string, Node*, Node*);
 	string numToStr(int);
+	string binToDec(string);
 
 	Node* get_root();
 	void set_root(Node*);
