@@ -100,12 +100,12 @@ void Tree::archive(std::string file_name)
 	this->set_root(trees[0].root);
 
 	// obrazuvane masic(map) na 0 i 1 posledovatelnosti za vs simvol ot faila
-	Pair** pairs = new Pair*[*n_of_diff_chars];
+	Pair** pairs = new Pair * [*n_of_diff_chars];
 	mappingSymbols(pairs);
 
 	for (int i = 0; i < *n_of_diff_chars; i++)
 	{
-		cout << pairs[i]->get_ch() << " " << pairs[i]->get_str()<<";";
+		cout << pairs[i]->get_ch() << " " << pairs[i]->get_str() << ";";
 	}
 	cout << endl;
 
@@ -114,32 +114,79 @@ void Tree::archive(std::string file_name)
 	ofstream outfile("archive_" + file_name);
 	char symb;
 
-	string tree_archive = treeToString();
+	outfile << treeToString() + "\n";
 
-	while (infile.get(symb)) {
-		outfile << mapped(pairs, symb, *n_of_diff_chars);
+	string str01 = "";
+	while (infile.get(symb)) 
+	{
+		str01 += mapped(pairs, symb, *n_of_diff_chars);
 	}
-	
+	outfile << binToDec(str01);
+
 	infile.close();
 	outfile.close();
 
 }
+string Tree::binToDec(string str01)
+{
+	string result = "";
+	int decNumbers = str01.length/8;
+	int lastN = str01.length % 8;
+	for (int i = 0; i < decNumbers; i++)
+	{
+		int decN = 0;
+		for (int j = 0; j < 8; j++)
+		{
+			decN += str01.at(i * 8 + j) * pow(2, 8 - j);
+		}
+		result += numToStr(decN) + " ";
+	}
+	int decN = 0;
+	for (int i = 0; i < lastN; i++)
+	{
+		decN += str01.at((decNumbers-1) * 8 + i) * pow(2, i);
+	}
+	if (lastN != 0)
+	{
+		result += numToStr(decN);
+	}
+	
+	return result;
+}
+
 string Tree::treeToString()
 {
 	return treeToStringRecursion("", this->get_root(), nullptr);
 }
 string Tree::treeToStringRecursion(string string_tree, Node* dis, Node* super)
 {
-	string_tree += "(";
+	
 	if (dis->next_left == nullptr)
 	{
-		string_tree += dis->symbol + numToStr(dis->sum);
+		return string_tree + "(" + dis->symbol + numToStr(dis->sum) + ")";
+	}
+	else
+	{
+		return string_tree + "(" + numToStr(dis->sum) + treeToStringRecursion(string_tree, dis->next_left, dis)
+													   + treeToStringRecursion(string_tree, dis->next_right, dis) + ")";
 	}
 }
 string Tree::numToStr(int n)
 {
+	int len = 0;
+	int ncopy = n;
+	do
+	{
+		ncopy /= 10;
+		len++;
+	} while (ncopy != 0);
+
 	string result = "";
-	while(n/10)
+	for (int i = len - 1; i >= 0; i--)
+	{
+		result += (char)((int)'0' + n / pow(10, i));
+		n /= 10;
+	}
 	return result;
 }
 
