@@ -32,4 +32,8 @@ Node& Node::operator= (const Node& other)
 
 Node::~Node()
 {
+	if (next_left != nullptr)
+		delete next_left;
+	if (next_right != nullptr)
+		delete next_right;
 }

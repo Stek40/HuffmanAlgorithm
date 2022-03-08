@@ -5,6 +5,7 @@ struct Node
 	char symbol;
 	Node* next_left;
 	Node* next_right;
+
 	Node();
 	Node(char, int);
 	Node(int);
