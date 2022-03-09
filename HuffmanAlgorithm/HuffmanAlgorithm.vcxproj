@@ -127,11 +127,13 @@
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Pair.cpp" />
     <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Node.h" />
     <ClInclude Include="Pair.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,56 +2,97 @@
 #include <fstream>
 #include <thread>
 #include <chrono>
+
 #include "Tree.h"
+#include "Utils.h"
 
 using namespace std;
 
-
-int main() {
-
+void printInstructions() {
 	cout << "> 'c <filename>' for compress\n> 'd <filename>' for decompress\n> 'x' for exit\n";
+}
+
+void commandController() {
 	string input = "";
 
 	while (1)
 	{
+		bool has_invalid_input = false;
 		cout << "\n>";
 		getline(cin, input);
-		if (input.at(0) == 'x')
+
+		if (input == "x")
 		{
 			cout << "exiting...\n";
 			this_thread::sleep_for(chrono::seconds(1));
-			return 0;
+			return;
 		}
-		if (input.at(0) == 'c')
+		if (input.size() >= 3 && input.at(1) == ' ')
 		{
-			string file_name = input.substr(2, input.length() - 1);
-			Tree t1;
-			t1.set_file_name(file_name);
-			t1.zip();
+
+			string file_name = input.substr(2, input.length() - 1); 
+			ifstream f(file_name);
+			if (Utils::isEmptyFile(f))
+			{
+				has_invalid_input = true;
+
+			}
+			else if (input.at(0) == 'c')
+			{
+				Tree t1;
+				t1.set_file_name(file_name);
+				t1.zip();
+			}
+			else if (input.at(0) == 'd')
+			{
+				Tree t1;
+				t1.set_file_name(file_name);
+				t1.unzip();
+			}
+			else
+			{
+				has_invalid_input = true;
+			}
+		} 
+		else
+		{
+			has_invalid_input = true;
 		}
-		if (input.at(0) == 'd')
+
+		if(has_invalid_input) 
 		{
-			string file_name = input.substr(2, input.length() - 1);
-			Tree t1;
-			t1.set_file_name(file_name);
-			t1.unzip();
+			cout << "\nThe input is invalid!\n\n";
+			printInstructions();
 		}
 	}
 
+}
+
+int main() {
+
+	string filename = "efed";
+	string str2 = "new_dt.txt";
+
+
+
+	/*
+	FILE* file;
+
+	file = fopen(str2.c_str(), "r");
+	if (file != NULL)
+	{
+		cout << "true";
+		fclose(file);
+	}
+	*/
+
+	printInstructions();
+	commandController();
 
 	//Tree tree;
 	//tree.zip("text.txt");
 	//tree.unzip("zip_text.txt");
-	//tree.zip("BIG.txt");
-	//tree.unzip("zip_BIG.txt");
-	//Tree tree2;
-	//tree2.zip("textche.txt");
-	//tree2.unzip("zip_textche.txt");
-
-
-
 
 	system("pause");
-
 	return 0;
 }

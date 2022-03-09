@@ -487,7 +487,7 @@ void Tree::set_root(Node* root)
 	this->root = root;
 }
 
-void Tree::set_file_name(string new_fn)
+void Tree::set_file_name(string new_file_name)
 {
-	this->file_name = new_fn;
+	this->file_name = new_file_name;
 }
