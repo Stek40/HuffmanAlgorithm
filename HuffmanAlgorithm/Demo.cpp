@@ -13,9 +13,9 @@ void printInstructions() {
 }
 
 void commandController() {
-	string input = "";
+	string input;
 
-	while (1)
+	while (true)
 	{
 		bool has_invalid_input = false;
 		cout << "\n>";
@@ -30,12 +30,12 @@ void commandController() {
 		if (input.size() >= 3 && input.at(1) == ' ')
 		{
 
-			string file_name = input.substr(2, input.length() - 1); 
+			string file_name = input.substr(2, input.length() - 1);
+            cout << file_name;
 			ifstream f(file_name);
 			if (Utils::isEmptyFile(f))
 			{
 				has_invalid_input = true;
-
 			}
 			else if (input.at(0) == 'c')
 			{
@@ -70,21 +70,9 @@ void commandController() {
 
 int main() {
 
-	string filename = "efed";
-	string str2 = "new_dt.txt";
-
-
-
-	/*
-	FILE* file;
-
-	file = fopen(str2.c_str(), "r");
-	if (file != NULL)
-	{
-		cout << "true";
-		fclose(file);
-	}
-	*/
+//    ofstream outfile("unziped_");
+//
+//    outfile << 'a';
 
 	printInstructions();
 	commandController();

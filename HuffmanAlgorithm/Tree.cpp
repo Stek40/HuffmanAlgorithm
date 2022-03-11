@@ -1,6 +1,7 @@
 #include "Tree.h"
 #include <iostream>
-#include <vector> 
+#include <vector>
+#include <cmath>
 using namespace std;
 
 Tree::Tree()
@@ -202,29 +203,29 @@ int Tree::strToNum(string number)
 void Tree::zip()
 {
 	ifstream length(this->file_name);
-	string orig_text = "";
+	string orig_text;
 	char ch2;
 	int orig_file_size = 0;
 	while (length.get(ch2))
 	{
 		orig_file_size++;
-	} orig_file_size *= 8;
+	} orig_file_size *= 8; // in bits?
 
 	ifstream f(this->file_name);
-	int* number_of_symbols = new int[256]{}; // chestotna tablica
+	int* occurrences_of_char = new int[256]{}; // chestotna tablica
 	char ch;
 
 	// reading file
 	while (f.get(ch)) {
-		number_of_symbols[(int)ch]++;
+		occurrences_of_char[(int)ch]++;
 	}
-	int* n_of_diff_chars = new int[1];
-	Node* nodes = zeroless_and_sorted(number_of_symbols, n_of_diff_chars);
-	cout << "different symbols: " << *n_of_diff_chars << endl;
+	int* different_symbols = new int[1];
+	Node* nodes = zeroless_and_sorted(occurrences_of_char, different_symbols);
+	cout << "different symbols: " << *different_symbols << endl;
 
 	vector<Tree> trees;
 
-	for (int i = 0; i < *n_of_diff_chars; i++) // n trees with a single Node
+	for (int i = 0; i < *different_symbols; i++) // n trees with a single Node
 	{
 		Tree* t = new Tree(nodes[i].symbol, nodes[i].sum);
 		trees.push_back(*t);
@@ -291,10 +292,10 @@ void Tree::zip()
 
 	this->set_root(trees[0].root);
 
-	Pair** pairs = new Pair * [*n_of_diff_chars];
+	Pair** pairs = new Pair * [*different_symbols];
 	mappingSymbols(pairs); // creating pairs(map) of... example: 'a' -> 01001
 
-	for (int i = 0; i < *n_of_diff_chars; i++)
+	for (int i = 0; i < *different_symbols; i++)
 	{
 		cout << pairs[i]->get_ch() << " " << pairs[i]->get_str() << "; ";
 	}
@@ -310,7 +311,7 @@ void Tree::zip()
 	string str01 = "";
 	while (infile.get(symb))
 	{
-		str01 += map(pairs, symb, *n_of_diff_chars);//map_name(symb)
+		str01 += map(pairs, symb, *different_symbols);//map_name(symb)
 	}
 	int compressed_size = str01.length();
 
@@ -435,25 +436,25 @@ int Tree::treedepth()
 	return depth;
 }
 
-Node* Tree::zeroless_and_sorted(int* arr, int* n_of_diff_chars)
+Node* Tree::zeroless_and_sorted(int* occurrences_of_symbol, int* n_of_diff_symbols)
 {
-	Node* node_arr = new Node[256];
+	Node* node_of_symbol = new Node[256];
 	int size = 0;
-	for (size_t i = 0; i < 256; i++)
+	for (size_t symbol = 0; symbol < 256; symbol++)
 	{
-		if (arr[i] != 0)
+		if (occurrences_of_symbol[symbol] != 0)
 		{
-			Node* nd = new Node((char)i, arr[i]);
-			node_arr[size++] = *nd;
+			Node* nd = new Node((char)symbol, occurrences_of_symbol[symbol]);
+            node_of_symbol[size++] = *nd;
 		}
 	}
-	*n_of_diff_chars = size;
+	*n_of_diff_symbols = size;
 	Node* result_arr = new Node[size];
 	for (int i = 0; i < size; i++)
 	{
-		result_arr[i] = node_arr[i];
+		result_arr[i] = node_of_symbol[i];
 	}
-	delete[] node_arr;
+	delete[] node_of_symbol;
 	for (int i = 0; i < size - 1; i++)
 	{
 		for (int j = 0; j < size - i - 1; j++)

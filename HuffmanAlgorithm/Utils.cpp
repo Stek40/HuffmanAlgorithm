@@ -9,11 +9,11 @@ bool Utils::isEmptyFile(ifstream &f)
 
 
 string Utils::decToBin(int dec) {
-	string result = "";
+	string result;
 	int length = 0;
 	while (dec != 0)
 	{
-		result = (dec % 2 == 0 ? "0" : "1") + result;
+		result += (dec % 2 == 0 ? "0" : "1");
 		dec /= 2;
 		length++;
 	}
@@ -21,7 +21,7 @@ string Utils::decToBin(int dec) {
 	{
 		for (int i = 0; i < 8 - length; i++)
 		{
-			result = "0" + result;
+			result += "0";
 		}
 	}
 	return result;

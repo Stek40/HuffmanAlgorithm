@@ -1,0 +1,3 @@
+C:/Users/stef/CLionProjects/HuffmanAlgorithm/cmake-build-debug/CMakeFiles/HuffmanAlgorithm.dir
+C:/Users/stef/CLionProjects/HuffmanAlgorithm/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/stef/CLionProjects/HuffmanAlgorithm/cmake-build-debug/CMakeFiles/rebuild_cache.dir
